@@ -1,7 +1,7 @@
-package com.example.boardinghouse.contracts;
+package com.example.boardinghouse.features.contracts;
 
-import com.example.boardinghouse.contracts.dto.ContractRequest;
-import com.example.boardinghouse.contracts.dto.ContractResponse;
+import com.example.boardinghouse.features.contracts.dto.ContractRequest;
+import com.example.boardinghouse.features.contracts.dto.ContractResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

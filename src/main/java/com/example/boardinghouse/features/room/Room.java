@@ -1,4 +1,4 @@
-package com.example.boardinghouse.room;
+package com.example.boardinghouse.features.room;
 
 import jakarta.persistence.*;
 import lombok.*;

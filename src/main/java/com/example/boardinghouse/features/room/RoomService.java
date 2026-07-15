@@ -1,4 +1,4 @@
-package com.example.boardinghouse.room;
+package com.example.boardinghouse.features.room;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
