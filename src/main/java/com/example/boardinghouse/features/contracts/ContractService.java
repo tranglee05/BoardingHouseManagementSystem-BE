@@ -1,9 +1,9 @@
-package com.example.boardinghouse.contracts;
+package com.example.boardinghouse.features.contracts;
 
-import com.example.boardinghouse.contracts.dto.ContractRequest;
-import com.example.boardinghouse.contracts.dto.ContractResponse;
-import com.example.boardinghouse.room.Room;
-import com.example.boardinghouse.room.RoomRepository;
+import com.example.boardinghouse.features.contracts.dto.ContractRequest;
+import com.example.boardinghouse.features.contracts.dto.ContractResponse;
+import com.example.boardinghouse.features.room.Room;
+import com.example.boardinghouse.features.room.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -66,7 +66,8 @@ public class ContractService {
         room.setStatus("rented");
         roomRepository.save(room);
 
-        return mapToResponseCustom(savedContract, room.getRoomNumber(), request.getTenantFullName(), generatedUsername, generatedPassword);
+        return mapToResponseCustom(savedContract, room.getRoomNumber(), request.getTenantFullName(), generatedUsername,
+                generatedPassword);
     }
 
     // 4. SỬA HỢP ĐỒNG (Gia hạn thời gian hoặc thay đổi tiền cọc)
@@ -153,7 +154,8 @@ public class ContractService {
                 .build();
     }
 
-    private ContractResponse mapToResponseCustom(Contract contract, String roomNumber, String tenantName, String username, String password) {
+    private ContractResponse mapToResponseCustom(Contract contract, String roomNumber, String tenantName,
+            String username, String password) {
         return ContractResponse.builder()
                 .contractId(contract.getId())
                 .roomNumber(roomNumber)

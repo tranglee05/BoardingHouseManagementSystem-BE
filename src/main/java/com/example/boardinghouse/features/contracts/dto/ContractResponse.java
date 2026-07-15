@@ -1,4 +1,4 @@
-package com.example.boardinghouse.contracts.dto;
+package com.example.boardinghouse.features.contracts.dto;
 
 import lombok.*;
 import java.math.BigDecimal;

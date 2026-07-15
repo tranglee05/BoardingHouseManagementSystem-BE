@@ -1,4 +1,4 @@
-package com.example.boardinghouse.contracts;
+package com.example.boardinghouse.features.contracts;
 
 import jakarta.persistence.*;
 import lombok.*;
