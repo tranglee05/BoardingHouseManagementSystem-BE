@@ -92,7 +92,7 @@ public class ContractService {
     public ContractResponse terminateContract(Long id) {
         Contract contract = contractRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Contract not found"));
-        
+
         contract.setStatus("terminated");
         contractRepository.save(contract);
 
@@ -121,7 +121,7 @@ public class ContractService {
                 .endDate(contract.getEndDate())
                 .deposit(contract.getDeposit())
                 .rentalPrice(contract.getRentalPrice())
-                .contractPdfUrl(contract.getContractPdfUrl())
+                .deposit(contract.getDeposit())
                 .status(contract.getStatus())
                 .appointmentId(contract.getAppointmentId())
                 .createdAt(contract.getCreatedAt())
