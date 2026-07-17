@@ -45,6 +45,6 @@ public class Message {
     private Boolean isRead = false;
 
     @org.hibernate.annotations.CreationTimestamp
-    @Column(name = "created_at", updatable = false)
+    @Column(name = "created_at", updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime createdAt;
 }

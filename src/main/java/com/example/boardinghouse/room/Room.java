@@ -44,6 +44,6 @@ public class Room {
     private String amenities;
 
     @org.hibernate.annotations.CreationTimestamp
-    @Column(name = "created_at", updatable = false)
+    @Column(name = "created_at", updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private java.time.LocalDateTime createdAt;
 }

@@ -57,7 +57,7 @@ public class User {
     private User landlord;
 
     @org.hibernate.annotations.CreationTimestamp
-    @Column(name = "created_at", updatable = false)
+    @Column(name = "created_at", updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime createdAt;
     
     // Đánh dấu để mapping 1-1 với LandlordProfile (nếu User này là chủ trọ)
