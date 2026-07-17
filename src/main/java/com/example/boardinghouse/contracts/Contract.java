@@ -1,5 +1,7 @@
 package com.example.boardinghouse.contracts;
 
+import com.example.boardinghouse.room.Room;
+import com.example.boardinghouse.user.user.User;
 import jakarta.persistence.*;
 import lombok.*;
 import java.math.BigDecimal;
@@ -17,12 +19,13 @@ public class Contract {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "room_id", nullable = false)
+    private Room room;
 
-    @Column(name = "room_id", nullable = false)
-    private Long roomId;
-
-    @Column(name = "tenant_id", nullable = false)
-    private Long tenantId; // Liên kết tới ID User (khách thuê) vừa được tự động tạo
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "tenant_id", nullable = false)
+    private User tenant;
 
     @Column(name = "start_date", nullable = false)
     private LocalDate startDate;
@@ -41,7 +44,10 @@ public class Contract {
 
     @Column(nullable = false)
     private String status = "active"; // active, expired, terminated
-
     @Column(name = "appointment_id")
     private Long appointmentId;
+
+    @org.hibernate.annotations.CreationTimestamp
+    @Column(name = "created_at", updatable = false)
+    private java.time.LocalDateTime createdAt;
 }

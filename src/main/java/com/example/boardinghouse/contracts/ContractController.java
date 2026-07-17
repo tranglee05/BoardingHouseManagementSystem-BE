@@ -6,11 +6,11 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/contracts")
-@CrossOrigin(origins = "http://localhost:5173")
 public class ContractController {
 
     @Autowired
@@ -32,13 +32,10 @@ public class ContractController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ContractResponse> updateContract(
-            @PathVariable Long id,
-            @Valid @RequestBody ContractRequest request) {
+    public ResponseEntity<ContractResponse> updateContract(@PathVariable Long id, @Valid @RequestBody ContractRequest request) {
         return ResponseEntity.ok(contractService.updateContract(id, request));
     }
 
-    // Chấm dứt hợp đồng sớm (Khách trả phòng - API logic nghiệp vụ)
     @PatchMapping("/{id}/terminate")
     public ResponseEntity<ContractResponse> terminateContract(@PathVariable Long id) {
         return ResponseEntity.ok(contractService.terminateContract(id));

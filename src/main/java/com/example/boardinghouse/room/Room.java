@@ -1,5 +1,6 @@
 package com.example.boardinghouse.room;
 
+import com.example.boardinghouse.building.Building;
 import jakarta.persistence.*;
 import lombok.*;
 import java.math.BigDecimal;
@@ -17,8 +18,9 @@ public class Room {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "building_id", nullable = false)
-    private Long buildingId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "building_id", nullable = false)
+    private Building building;
 
     @Column(name = "room_number", nullable = false, length = 50)
     private String roomNumber;
@@ -40,4 +42,8 @@ public class Room {
 
     @Column(columnDefinition = "TEXT")
     private String amenities;
+
+    @org.hibernate.annotations.CreationTimestamp
+    @Column(name = "created_at", updatable = false)
+    private java.time.LocalDateTime createdAt;
 }

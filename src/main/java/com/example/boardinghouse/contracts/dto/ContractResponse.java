@@ -1,23 +1,25 @@
 package com.example.boardinghouse.contracts.dto;
 
-import lombok.*;
+import lombok.Builder;
+import lombok.Data;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
+@Data
 @Builder
 public class ContractResponse {
-    private Long contractId;
+    private Long id;
+    private Long roomId;
     private String roomNumber;
+    private Long tenantId;
     private String tenantName;
-    private String generatedUsername; // Tài khoản đăng nhập tự sinh cho khách thuê
-    private String generatedPassword; // Mật khẩu tự sinh để gửi cho khách thuê
     private LocalDate startDate;
     private LocalDate endDate;
-    private BigDecimal rentalPrice; // Tự động lấy giá gốc từ bảng Rooms
     private BigDecimal deposit;
+    private BigDecimal rentalPrice;
+    private String contractPdfUrl;
     private String status;
+    private Long appointmentId;
+    private LocalDateTime createdAt;
 }

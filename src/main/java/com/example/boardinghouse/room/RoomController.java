@@ -1,45 +1,49 @@
 package com.example.boardinghouse.room;
 
+import com.example.boardinghouse.room.dto.RoomRequest;
+import com.example.boardinghouse.room.dto.RoomResponse;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/rooms")
-@CrossOrigin(origins = "http://localhost:5173") //kết nối fontend
 public class RoomController {
 
     @Autowired
     private RoomService roomService;
 
     @GetMapping
-    public ResponseEntity<List<Room>> getAllRooms(
-            @RequestParam(required = false) String status,
-            @RequestParam(required = false) Long buildingId) {
-
-        if (status != null) {
-            return ResponseEntity.ok(roomService.getRoomsByStatus(status));
-        }
-        if (buildingId != null) {
-            return ResponseEntity.ok(roomService.getRoomsByBuilding(buildingId));
-        }
+    public ResponseEntity<List<RoomResponse>> getAllRooms() {
         return ResponseEntity.ok(roomService.getAllRooms());
     }
 
+    @GetMapping("/building/{buildingId}")
+    public ResponseEntity<List<RoomResponse>> getRoomsByBuilding(@PathVariable Long buildingId) {
+        return ResponseEntity.ok(roomService.getRoomsByBuilding(buildingId));
+    }
+
+    @GetMapping("/status/{status}")
+    public ResponseEntity<List<RoomResponse>> getRoomsByStatus(@PathVariable String status) {
+        return ResponseEntity.ok(roomService.getRoomsByStatus(status));
+    }
+
     @GetMapping("/{id}")
-    public ResponseEntity<Room> getRoomById(@PathVariable Long id) {
+    public ResponseEntity<RoomResponse> getRoomById(@PathVariable Long id) {
         return ResponseEntity.ok(roomService.getRoomById(id));
     }
 
     @PostMapping
-    public ResponseEntity<Room> createRoom(@RequestBody Room room) {
-        return ResponseEntity.ok(roomService.createRoom(room));
+    public ResponseEntity<RoomResponse> createRoom(@Valid @RequestBody RoomRequest request) {
+        return ResponseEntity.ok(roomService.createRoom(request));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Room> updateRoom(@PathVariable Long id, @RequestBody Room roomDetails) {
-        return ResponseEntity.ok(roomService.updateRoom(id, roomDetails));
+    public ResponseEntity<RoomResponse> updateRoom(@PathVariable Long id, @Valid @RequestBody RoomRequest request) {
+        return ResponseEntity.ok(roomService.updateRoom(id, request));
     }
 
     @DeleteMapping("/{id}")
