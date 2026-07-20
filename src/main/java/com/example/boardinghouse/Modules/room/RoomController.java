@@ -52,7 +52,7 @@ public class RoomController {
         return ResponseEntity.noContent().build();
     }
 
-    @PostMapping("/{id}/images")
+    @PostMapping(value = "/{id}/images", consumes = org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<RoomResponse> uploadRoomImage(
             @PathVariable Long id, 
             @RequestParam("file") org.springframework.web.multipart.MultipartFile file) {

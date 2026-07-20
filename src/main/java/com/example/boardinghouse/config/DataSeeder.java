@@ -34,7 +34,7 @@ public class DataSeeder implements CommandLineRunner {
         if (userRepository.findByUsername("admin").isEmpty()) {
             User admin = User.builder()
                     .username("admin")
-                    .password(passwordEncoder.encode("admin123"))
+                    .password(passwordEncoder.encode("123456"))
                     .fullName("System Administrator")
                     .email("admin@gmail.com")
                     .role("landlord") // Admin có thể đóng vai trò landlord cao nhất
