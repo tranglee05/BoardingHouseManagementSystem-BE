@@ -19,4 +19,5 @@ public class RoomResponse {
     private String description;
     private String amenities;
     private LocalDateTime createdAt;
+    private java.util.List<String> imageUrls;
 }

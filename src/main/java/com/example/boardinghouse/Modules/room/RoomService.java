@@ -9,17 +9,25 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import com.example.boardinghouse.common.FileUploadService;
+import org.springframework.web.multipart.MultipartFile;
+import java.io.IOException;
 
 @Service
 public class RoomService {
 
     private final RoomRepository roomRepository;
     private final BuildingRepository buildingRepository;
+    private final RoomImageRepository roomImageRepository;
+    private final FileUploadService fileUploadService;
 
     @Autowired
-    public RoomService(RoomRepository roomRepository, BuildingRepository buildingRepository) {
+    public RoomService(RoomRepository roomRepository, BuildingRepository buildingRepository, 
+                       RoomImageRepository roomImageRepository, FileUploadService fileUploadService) {
         this.roomRepository = roomRepository;
         this.buildingRepository = buildingRepository;
+        this.roomImageRepository = roomImageRepository;
+        this.fileUploadService = fileUploadService;
     }
 
     public List<RoomResponse> getAllRooms() {
@@ -91,7 +99,27 @@ public class RoomService {
         roomRepository.delete(room);
     }
 
+    public RoomResponse uploadRoomImage(Long roomId, MultipartFile file) throws IOException {
+        Room room = roomRepository.findById(roomId)
+                .orElseThrow(() -> new RuntimeException("Room not found"));
+
+        String imageUrl = fileUploadService.uploadImage(file);
+        
+        RoomImage roomImage = RoomImage.builder()
+                .room(room)
+                .imageUrl(imageUrl)
+                .build();
+        roomImageRepository.save(roomImage);
+        
+        return mapToResponse(room);
+    }
+
     private RoomResponse mapToResponse(Room room) {
+        List<String> imageUrls = roomImageRepository.findByRoomId(room.getId())
+                .stream()
+                .map(RoomImage::getImageUrl)
+                .collect(Collectors.toList());
+
         return RoomResponse.builder()
                 .id(room.getId())
                 .buildingId(room.getBuilding().getId())
@@ -104,6 +132,7 @@ public class RoomService {
                 .description(room.getDescription())
                 .amenities(room.getAmenities())
                 .createdAt(room.getCreatedAt())
+                .imageUrls(imageUrls)
                 .build();
     }
 }

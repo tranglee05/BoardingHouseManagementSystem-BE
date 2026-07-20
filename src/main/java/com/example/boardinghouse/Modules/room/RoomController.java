@@ -51,4 +51,15 @@ public class RoomController {
         roomService.deleteRoom(id);
         return ResponseEntity.noContent().build();
     }
+
+    @PostMapping("/{id}/images")
+    public ResponseEntity<RoomResponse> uploadRoomImage(
+            @PathVariable Long id, 
+            @RequestParam("file") org.springframework.web.multipart.MultipartFile file) {
+        try {
+            return ResponseEntity.ok(roomService.uploadRoomImage(id, file));
+        } catch (java.io.IOException e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
 }
