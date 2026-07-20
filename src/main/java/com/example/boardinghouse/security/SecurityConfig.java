@@ -22,9 +22,15 @@ public class SecurityConfig {
         http
             .csrf(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests(auth -> auth
-                // Temporarily permit all to prevent breaking existing API. 
-                // Specific APIs like /api/tenants and /api/appointments can be restricted here later.
-                .anyRequest().permitAll()
+                .requestMatchers(
+                        "/api/test/**",
+                        "/api/appointments/public/**",
+                        "/swagger-ui/**",
+                        "/v3/api-docs/**",
+                        "/swagger-resources/**",
+                        "/webjars/**"
+                ).permitAll()
+                .anyRequest().authenticated()
             )
             .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);

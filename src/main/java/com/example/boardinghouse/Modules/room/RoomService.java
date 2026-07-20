@@ -13,7 +13,10 @@ import com.example.boardinghouse.common.FileUploadService;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 
+import org.springframework.transaction.annotation.Transactional;
+
 @Service
+@Transactional
 public class RoomService {
 
     private final RoomRepository roomRepository;

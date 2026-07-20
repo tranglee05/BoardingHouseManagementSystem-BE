@@ -9,6 +9,12 @@ import org.springframework.stereotype.Service;
 import java.security.Key;
 import java.util.function.Function;
 
+import com.example.boardinghouse.Modules.user.user.User;
+import io.jsonwebtoken.SignatureAlgorithm;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
 @Service
 public class JwtService {
 
@@ -16,6 +22,23 @@ public class JwtService {
 
     public String extractUserId(String token) {
         return extractClaim(token, Claims::getSubject);
+    }
+
+    public String extractRole(String token) {
+        return extractClaim(token, claims -> claims.get("role", String.class));
+    }
+
+    public String generateToken(User user) {
+        Map<String, Object> extraClaims = new HashMap<>();
+        extraClaims.put("role", user.getRole());
+        
+        return Jwts.builder()
+                .setClaims(extraClaims)
+                .setSubject(user.getId().toString())
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24)) // 1 day
+                .signWith(getSignInKey(), SignatureAlgorithm.HS256)
+                .compact();
     }
 
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
